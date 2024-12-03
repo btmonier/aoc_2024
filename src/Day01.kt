@@ -1,21 +1,42 @@
+import kotlin.math.absoluteValue
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+
+    val dayInput = readInput("day_01")
+
+    // Part 1
+    val res01 = dayInput
+        .map { line ->
+            line
+                .split("\\s+".toRegex())
+                .map { it.toInt() }
+                .let { it[0] to it[1] }
+        }
+        .unzip()
+        .let { it.first.sorted() to it.second.sorted() }
+        .let { it.first.zip(it.second).map { (it.first - it.second).absoluteValue }}
+        .sum()
+
+
+    // Part 2
+    val p2 = dayInput
+        .map { line ->
+            line.split("\\s+".toRegex())
+                .map { it.toInt() }
+                .let { it[0] to it[1] }
+        }
+        .unzip()
+        .let {
+            it.first to it.second
+        }
+
+    val p2Freq = p2.second.groupingBy { it }.eachCount()
+
+    val res02 = p2.first.sumOf {
+        val occ = p2Freq[it] ?: 0
+        it * occ
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
-
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    // Read the input from the `src/Day01.txt` file.
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    println("Part 1 answer: $res01")
+    println("Part 2 answer: $res02")
 }
