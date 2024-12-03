@@ -13,12 +13,10 @@ fun main() {
     }
 
     fun findCompatMul(s: String): List<String> {
-        val regex = """(?:^|do\(\))(.*?)(?:don't\(\)|$)""".toRegex(RegexOption.DOT_MATCHES_ALL)
+        val regex = """(?:^|do\(\))(.*?)(?:don't\(\)|$)""".toRegex()
 
         val match = regex.findAll(s)
-            .map { match ->
-                match.groupValues[0]
-            }
+            .map { match -> match.groupValues[0] }
             .toList()
 
         return match
