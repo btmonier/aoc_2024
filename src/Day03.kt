@@ -1,26 +1,28 @@
+
+fun mulExtract(s: String): List<Pair<Int, Int>> {
+    val regex = """mul\((\d{1,3}),(\d{1,3})\)""".toRegex()
+
+    val match = regex.findAll(s)
+        .map { match ->
+            val (n1, n2) = match.destructured
+            n1.toInt() to n2.toInt()
+        }
+        .toList()
+
+    return match
+}
+
+fun findCompatMul(s: String): List<String> {
+    val regex = """(?:^|do\(\))(.*?)(?:don't\(\)|$)""".toRegex()
+
+    val match = regex.findAll(s)
+        .map { match -> match.groupValues[0] }
+        .toList()
+
+    return match
+}
+
 fun main() {
-    fun mulExtract(s: String): List<Pair<Int, Int>> {
-        val regex = """mul\((\d{1,3}),(\d{1,3})\)""".toRegex()
-
-        val match = regex.findAll(s)
-            .map { match ->
-                val (n1, n2) = match.destructured
-                n1.toInt() to n2.toInt()
-            }
-            .toList()
-
-        return match
-    }
-
-    fun findCompatMul(s: String): List<String> {
-        val regex = """(?:^|do\(\))(.*?)(?:don't\(\)|$)""".toRegex()
-
-        val match = regex.findAll(s)
-            .map { match -> match.groupValues[0] }
-            .toList()
-
-        return match
-    }
 
     val dayInput = readInput("day_03").joinToString("")
 
